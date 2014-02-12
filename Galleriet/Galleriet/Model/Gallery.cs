@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
+using System.Drawing;
 using System.Drawing.Imaging;
 
 namespace Galleriet.Model
@@ -18,7 +19,7 @@ namespace Galleriet.Model
         {
             ApprovedExtensions = new Regex("^.*.(gif|jpg|png)$", RegexOptions.IgnoreCase);
 
-            PhysicalUploadedImagesPath = Path.Combine(AppDomain.CurrentDomain.GetData("APPBASE").ToString(), "Content/Images");
+            PhysicalUploadedImagesPath = Path.Combine(AppDomain.CurrentDomain.GetData("APPBASE").ToString(), "~/Content/Images");
 
             var invalidChars = new string(Path.GetInvalidFileNameChars());
             SantizePath = new Regex(string.Format("[{0}]", Regex.Escape(invalidChars)));
@@ -27,9 +28,21 @@ namespace Galleriet.Model
 
         public IEnumerable<string> GetImageNames()
         {
-            var sortedFiles = new DirectoryInfo(PhysicalUploadedImagesPath).GetFiles().OrderBy(f => f.Name).ToList();
+            var files = new DirectoryInfo(PhysicalUploadedImagesPath).GetFiles();
+            List<string> imagesList = new List<string>(files.Length);
 
-            return sortedFiles;
+            foreach (var file in files)
+            {
+                if (file.Extension.Contains(ApprovedExtensions.ToString()))
+                {
+                    imagesList.Add(file.ToString());
+                }
+            }
+
+            imagesList.Sort();
+
+            return imagesList.AsEnumerable();
+        
         }
 
         public bool ImageExists(string name)
@@ -48,9 +61,9 @@ namespace Galleriet.Model
 
         private bool IsValidImage(Image image)
         {
-            if (image.RawFormat.Guid == System.Drawing.Imaging.Gif.Guid
-                || image.RawFormat.Guid == System.Drawing.Imaging.Jpeg.Guid 
-                || image.RawFormat.Guid == System.Drawing.Imaging.Png.Guid)
+            if (image.RawFormat.Guid == ImageFormat.Gif.Guid
+                || image.RawFormat.Guid == ImageFormat.Jpeg.Guid 
+                || image.RawFormat.Guid == ImageFormat.Png.Guid)
             {
                 return true;
             }
@@ -62,6 +75,18 @@ namespace Galleriet.Model
         }
 
         public string SaveImage(Stream stream, string fileName)
-        { }
+        {
+            /*if (!IsValidImage(fileName))
+            {
+                throw new ArgumentException();
+            }*/
+
+            if (ImageExists(fileName))
+            {
+                
+            }
+
+            return fileName;
+        }
     }
 }
