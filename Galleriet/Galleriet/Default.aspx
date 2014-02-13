@@ -9,13 +9,15 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            <asp:Repeater ID="Repeater1" runat="server">
+            <asp:Image ID="ImageHolder" runat="server" Height="500" Width="350" />
+
+            <asp:Repeater ID="Repeater1" runat="server" ItemType="System.String" SelectMethod="Repeater1_GetData"  >
                 <HeaderTemplate>
                     <ul class="files">
                 </HeaderTemplate>
                 <ItemTemplate>
                     <li>
-                        <asp:HyperLink ID="FileyperLink" runat="server" NavigateUrl="">HyperLink</asp:HyperLink>
+                        <asp:HyperLink ID="FileyperLink" runat="server"  Text='<%#Item  %>' ImageUrl='<%"Content/Images/" + Item %>' NavigateUrl='<%#"?" + Item %>'>HyperLink</asp:HyperLink>
                     </li>
                 </ItemTemplate>
             </asp:Repeater>
