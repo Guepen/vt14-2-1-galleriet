@@ -76,15 +76,34 @@ namespace Galleriet.Model
 
         public string SaveImage(Stream stream, string fileName)
         {
-            /*if (!IsValidImage(fileName))
+            var image = System.Drawing.Image.FromStream(stream);
+            var thumbnail = image.GetThumbnailImage(60, 45, null, System.IntPtr.Zero);
+
+            if (!ApprovedExtensions.IsMatch(fileName))
             {
                 throw new ArgumentException();
-            }*/
+            }
+
+            if (IsValidImage(image))
+            {
+                image.Save(PhysicalUploadedImagesPath + fileName);   
+            }
 
             if (ImageExists(fileName))
             {
+                var fileNameNoExtension = Path.GetFileNameWithoutExtension(fileName);
+                var fileNameExtension = Path.GetExtension(fileName);
+                int count = 1;
+
+                while (ImageExists(fileName))
+                {
+                    fileName = String.Format("{0}{1}{2}", fileNameNoExtension, count, fileNameExtension );
+                    count++;
+                }
                 
             }
+
+            thumbnail.Save(PhysicalUploadedImagesPath + "Thumbnails" + fileName);
 
             return fileName;
         }
