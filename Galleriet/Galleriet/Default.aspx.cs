@@ -18,6 +18,17 @@ namespace Galleriet
 
         protected void ButtonUpload_Click(object sender, EventArgs e)
         {
+            if (IsValid)
+            {
+                if (FileUpload.HasFile)
+                {
+                    Gallery gallery = new Gallery();
+                    gallery.SaveImage(FileUpload.FileContent, FileUpload.FileName);
+
+                    ImageHolder.ImageUrl = "Content/Images/" + FileUpload.FileName;
+                    UploadSuccess.Visible = true;
+                }
+            }
 
         }
 

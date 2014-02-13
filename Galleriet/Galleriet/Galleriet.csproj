@@ -60,6 +60,9 @@
     <Content Include="Content\Images\orangeblomma.jpg" />
     <Content Include="Content\Images\ros.jpg" />
     <Content Include="Content\Images\rosablomkvist.jpg" />
+    <Content Include="Content\Images\Thumbnails\orangeblomma.jpg" />
+    <Content Include="Content\Images\Thumbnails\ros.jpg" />
+    <Content Include="Content\Images\Thumbnails\rosablomkvist.jpg" />
     <Content Include="Default.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -82,9 +85,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Content\Images\Thumbnails\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

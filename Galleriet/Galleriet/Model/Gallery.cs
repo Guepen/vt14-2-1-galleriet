@@ -13,13 +13,15 @@ namespace Galleriet.Model
     {
         private static readonly Regex ApprovedExtensions;
         private static string PhysicalUploadedImagesPath;
+        private static string PhysicalUploadedThubnailImagesPath;
         private static readonly Regex SantizePath;
 
         static Gallery()
         {
             ApprovedExtensions = new Regex("^.*.(gif|jpg|png)$", RegexOptions.IgnoreCase);
 
-            PhysicalUploadedImagesPath = Path.Combine(AppDomain.CurrentDomain.GetData("APPBASE").ToString(), @"~/Content/Images");
+            PhysicalUploadedImagesPath = Path.Combine(AppDomain.CurrentDomain.GetData("APPBASE").ToString(), @"Content/Images");
+            PhysicalUploadedThubnailImagesPath = Path.Combine(AppDomain.CurrentDomain.GetData("APPBASE").ToString(), @"Content/Images/Thumbnails");
 
             var invalidChars = new string(Path.GetInvalidFileNameChars());
             SantizePath = new Regex(string.Format("[{0}]", Regex.Escape(invalidChars)));
@@ -28,12 +30,12 @@ namespace Galleriet.Model
 
         public IEnumerable<string> GetImageNames()
         {
-            var files = new DirectoryInfo(PhysicalUploadedImagesPath).GetFiles();
+            var files = new DirectoryInfo(PhysicalUploadedThubnailImagesPath).GetFiles();
             List<string> imagesList = new List<string>(files.Length);
 
             foreach (var file in files)
             {
-                if (file.Extension.Contains(ApprovedExtensions.ToString()))
+                if (ApprovedExtensions.IsMatch(file.Extension))
                 {
                     imagesList.Add(file.ToString());
                 }
@@ -86,7 +88,7 @@ namespace Galleriet.Model
 
             if (IsValidImage(image))
             {
-                image.Save(PhysicalUploadedImagesPath + fileName);   
+                image.Save(Path.Combine(PhysicalUploadedImagesPath, fileName));   
             }
 
             if (ImageExists(fileName))
@@ -103,7 +105,7 @@ namespace Galleriet.Model
                 
             }
 
-            thumbnail.Save(PhysicalUploadedImagesPath + "Thumbnails" + fileName);
+            thumbnail.Save(Path.Combine(PhysicalUploadedThubnailImagesPath, fileName));
 
             return fileName;
         }
