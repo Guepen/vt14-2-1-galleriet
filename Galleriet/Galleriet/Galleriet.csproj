@@ -57,12 +57,15 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Images\brfc.jpg" />
+    <Content Include="Content\Style\bakgrundGalleri.jpg" />
     <Content Include="Content\Images\orangeblomma.jpg" />
     <Content Include="Content\Images\ros.jpg" />
     <Content Include="Content\Images\rosablomkvist.jpg" />
     <Content Include="Content\Images\Thumbnails\orangeblomma.jpg" />
     <Content Include="Content\Images\Thumbnails\ros.jpg" />
     <Content Include="Content\Images\Thumbnails\rosablomkvist.jpg" />
+    <Content Include="Content\Style\Style.css" />
     <Content Include="Default.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>

@@ -12,8 +12,15 @@ namespace Galleriet
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+          
             var queryString = Request.QueryString;
+
+            if (queryString != null)
+            {
+                ImageHolder.Visible = true;   
+            }
             ImageHolder.ImageUrl = "Content/Images/" + queryString;
+             
         }
 
         protected void ButtonUpload_Click(object sender, EventArgs e)
