@@ -86,10 +86,6 @@ namespace Galleriet.Model
                 throw new ArgumentException();
             }
 
-            if (IsValidImage(image))
-            {
-                image.Save(Path.Combine(PhysicalUploadedImagesPath, fileName));   
-            }
 
             if (ImageExists(fileName))
             {
@@ -103,6 +99,11 @@ namespace Galleriet.Model
                     count++;
                 }
                 
+            }
+
+            if (IsValidImage(image))
+            {
+                image.Save(Path.Combine(PhysicalUploadedImagesPath, fileName));
             }
 
             thumbnail.Save(Path.Combine(PhysicalUploadedThubnailImagesPath, fileName));
